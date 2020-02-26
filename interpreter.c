@@ -113,7 +113,7 @@ int exec(char *commands[], int numargs){
         char* prog_name = commands[ptr]; 
         
         if(access(prog_name, F_OK) == -1)
-            return -1; 
+            return 0; 
     }
     
     //init all files 

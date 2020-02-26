@@ -9,6 +9,9 @@ int myinit(char *filename);
 int scheduler();
 void addToReady(PCB* pcb);  
 
+PCB* head = NULL;
+PCB* tail = NULL; 
+
 void main(){
     shellUI();	
 }
@@ -40,5 +43,16 @@ int scheduler(){
 }
 
 void addToReady(PCB* pcb){
-    
+    if(pcb == NULL) return; 
+
+    if(head == NULL) {
+        head = pcb; 
+        tail = pcb; 
+    } else if(head->next == NULL){
+        head->next = pcb; 
+        tail = pcb; 
+    } else {
+        tail->next = pcb; 
+        tail = pcb; 
+    }
 }
