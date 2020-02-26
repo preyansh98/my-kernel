@@ -1,13 +1,10 @@
 #ifndef CPU_H
 #define CPU_H
-
-struct CPU {
-    int IP;
-    char IR[1000];
-    int quanta = 2; 
-};
-
-extern struct CPU cpu; 
+ 
 int run(int quanta); 
+void setCPU_IP(int ip);
+int getCPU_IP(); 
+int isCPUAvailable(); 
+void initCPU(); 
 
 #endif

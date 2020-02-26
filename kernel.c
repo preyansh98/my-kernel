@@ -4,6 +4,8 @@
 #include "pcb.h"
 #include "kernel.h"
 #include "ram.h"
+#include "cpu.h"
+#define CPU_QUANTA 2
 
 int myinit(char *filename); 
 int scheduler();
@@ -33,13 +35,37 @@ int myinit(char *filename){
         return -1; 
     
     PCB* pcb = makePCB(startLoc, endLoc); 
-    addToReady(pcb); 
-    
+    addToReady(pcb);    
+      
     return 0;   
 }
 
 int scheduler(){
-    return 0; 
+    
+    while(isCPUAvailable() == -1) ; 
+    
+    while(head != NULL) {
+        setCPU_IP(head->PC);
+        run(CPU_QUANTA);
+        int _cpuIP = getCPU_IP(); 
+
+        if(_cpuIP <= head->end) {
+            //still has to be processed. 
+            head->PC = _cpuIP; 
+            PCB* newHead = head->next; 
+            head->next = NULL; 
+            tail->next = head;
+            tail = tail->next; 
+            head = newHead;  
+        } else {
+            //done. 
+            PCB* newHead = head->next; 
+            free(head); 
+            head = newHead; 
+        }
+
+        head = head->next; 
+    }
 }
 
 void addToReady(PCB* pcb){

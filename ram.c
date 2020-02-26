@@ -32,3 +32,13 @@ void clearRAM(){
         ram[i] = NULL; 
     }
 }
+
+char* getLineFromRAM(int *isValid, int k){
+    if(k < RAM_SIZE && ram[k] != NULL) {
+        *isValid = 1; 
+        return ram[k];
+    } else {
+        *isValid = -1; 
+        return "";
+    }
+}
