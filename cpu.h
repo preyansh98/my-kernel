@@ -8,5 +8,6 @@ struct CPU {
 };
 
 extern struct CPU cpu; 
+int run(int quanta); 
 
 #endif

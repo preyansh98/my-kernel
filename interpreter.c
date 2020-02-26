@@ -13,7 +13,7 @@ int help(char *commands[],int numargs);
 int quit(char *commands[],int numargs); 
 int set(char *commands[],int numargs); 
 int print(char *commands[],int numargs); 
-int run(char *commands[],int numargs); 
+int run_script(char *commands[],int numargs); 
 int exec(char *commands[], int numargs); 
 
 int interpreter(char *commands[], int numargs){
@@ -24,7 +24,7 @@ int interpreter(char *commands[], int numargs){
 	else if (strcmp(commands[0], "quit") == 0) errCode = quit(commands, numargs); 
 	else if (strcmp(commands[0], "set") == 0) errCode = set(commands, numargs); 
 	else if (strcmp(commands[0], "print") == 0) errCode = print(commands, numargs);
-	else if (strcmp(commands[0], "run") == 0) errCode = run(commands, numargs); 
+	else if (strcmp(commands[0], "run") == 0) errCode = run_script(commands, numargs); 
 	else if (strcmp(commands[0], "exec") == 0) errCode = exec(commands, numargs);
         else return 3;
 
@@ -69,7 +69,7 @@ int print(char *commands[], int numargs){
 	return printVar(commands[1]);	
 }
 
-int run(char *commands[], int numargs){
+int run_script(char *commands[], int numargs){
 	if(numargs != 2) return 2; 
 
 	int errCode = 0; 
