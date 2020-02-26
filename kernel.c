@@ -28,31 +28,30 @@ int myinit(char *filename){
 
     int startLoc = -1; 
     int endLoc = -1; 
-    
+     
     addToRAM(p, &startLoc, &endLoc); 
-    
+     
     if(startLoc == -1 || endLoc == -1)
         return -1; 
     
     PCB* pcb = makePCB(startLoc, endLoc); 
     addToReady(pcb);    
-      
+       
     return 0;   
 }
 
 int scheduler(){
-    
-    while(isCPUAvailable() == -1) ; 
-    
+      
     while(head != NULL) {
+        while(isCPUAvailable() == -1) ; 
+
         setCPU_IP(head->PC);
         run(CPU_QUANTA);
         int _cpuIP = getCPU_IP(); 
 
         if(_cpuIP <= head->end) {
-            //still has to be processed. 
             head->PC = _cpuIP; 
-            PCB* newHead = head->next; 
+            PCB* newHead = head->next;  
             head->next = NULL; 
             tail->next = head;
             tail = tail->next; 
@@ -62,10 +61,9 @@ int scheduler(){
             PCB* newHead = head->next; 
             free(head); 
             head = newHead; 
-        }
-
-        head = head->next; 
+        } 
     }
+    return 0; 
 }
 
 void addToReady(PCB* pcb){
@@ -73,7 +71,7 @@ void addToReady(PCB* pcb){
 
     if(head == NULL) {
         head = pcb; 
-        tail = pcb; 
+        tail = pcb;
     } else if(head->next == NULL){
         head->next = pcb; 
         tail = pcb; 

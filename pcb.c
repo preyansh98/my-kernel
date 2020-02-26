@@ -6,6 +6,7 @@ PCB* makePCB(int start, int end);
 
 PCB* makePCB(int start, int end){
     PCB *pcb = malloc (sizeof (PCB)); 
+    pcb->PC = 0; 
     pcb->start = start; 
     pcb->end = end;
     pcb->next = NULL; 

@@ -7,6 +7,7 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include "kernel.h"
+#include "cpu.h"
 
 int interpreter(char *commands[], int numargs); 
 int help(char *commands[],int numargs); 
@@ -17,10 +18,9 @@ int run_script(char *commands[],int numargs);
 int exec(char *commands[], int numargs); 
 
 int interpreter(char *commands[], int numargs){
-	
 	int errCode = 0;
-      	 
-	if(strcmp(commands[0], "help") == 0) errCode = help(commands, numargs);
+      	
+        if(strcmp(commands[0], "help") == 0) errCode = help(commands, numargs);
 	else if (strcmp(commands[0], "quit") == 0) errCode = quit(commands, numargs); 
 	else if (strcmp(commands[0], "set") == 0) errCode = set(commands, numargs); 
 	else if (strcmp(commands[0], "print") == 0) errCode = print(commands, numargs);
@@ -96,7 +96,7 @@ int run_script(char *commands[], int numargs){
 
 int exec(char *commands[], int numargs){
     if(numargs < 1 || numargs > 4) return 2; 
-
+    
     //check duplicates
     for(int ptr = 1; ptr<numargs; ptr++){
         char *prog = commands[ptr]; 
@@ -112,16 +112,16 @@ int exec(char *commands[], int numargs){
     for(int ptr = 1; ptr<numargs; ptr++){
         char* prog_name = commands[ptr]; 
         
-        if(access(prog_name, F_OK) == -1)
+        if(access(prog_name, F_OK) == -1) {
             return 0; 
+        }
     }
-    
-    //init all files 
-    for(int ptr = 1; ptr<numargs; ptr++){
+   
+    initCPU(); 
+
+    for(int ptr = 1; ptr<numargs; ptr++){ 
         myinit(commands[ptr]);
     }
-
-    scheduler(); 
-
-    return 0; 
+    
+    return scheduler();  
 }

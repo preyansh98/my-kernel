@@ -17,14 +17,11 @@ int getCPU_IP();
 void setCPU_IP(int ip); 
 void initCPU();  
     
-int run(int quanta){
-    while(cpu.quanta > 0){
-        parse(strdup(cpu.IR)); 
-        cpu.IP++;
-        
+int run(int quanta){ 
+    while(cpu.quanta > 0){    
         int isNextInstructionValid = -1; 
         char* nextInstruction = getLineFromRAM(&isNextInstructionValid, cpu.IP); 
-
+         
         if(isNextInstructionValid == -1){
             initCPU(); 
             break;
@@ -32,8 +29,13 @@ int run(int quanta){
 
         //next instruction valid. 
         strcpy(cpu.IR, nextInstruction);
+        
+        parse(cpu.IR); 
+
+        cpu.IP++;
         cpu.quanta--; 
     }
+    cpu.quanta = CPU_QUANTA;
     return 0; 
 }
 
@@ -51,5 +53,5 @@ void setCPU_IP(int ip) {
 }
 
 void initCPU(){
-    cpu.quanta = CPU_QUANTA;  
+    cpu.quanta = CPU_QUANTA;   
 }
