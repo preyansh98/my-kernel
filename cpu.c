@@ -36,7 +36,6 @@ int run(int quanta){
         cpu.IR[strlen(cpu.IR) - 1] = '\0';
         strtok(cpu.IR, "\r");
         
-        printf("parsing line %d of ram which is %s \n " , cpu.IP, cpu.IR);
         parse(cpu.IR); 
 
         cpu.IP++;
@@ -56,7 +55,6 @@ int getCPU_IP(){
 }
 
 void setCPU_IP(int ip) {
-    printf("SETTING CPU IP TO %d \n ", ip);
     cpu.IP = ip; 
 }
 
