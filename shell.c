@@ -17,8 +17,10 @@ int shellUI(){
 
 	while(1){
 		printf("%s", prompt); 
-		fgets(userInput, 999, stdin);
-                
+
+		fgets(userInput, 999, stdin);                
+                removeNewLine(userInput);
+
                 if(strlen(userInput) == 0) continue; 
 
 		errorCode = parse(userInput); 
@@ -40,7 +42,6 @@ int shellUI(){
 
 //parser just separates command and arguments and sends it in
 int parse(char ui[]){	
-        removeNewLine(ui);
 	char tmp[200];
 	char *words[100];
 
@@ -64,8 +65,8 @@ int parse(char ui[]){
 	return interpreter(words,w); 
 }
 
-void removeNewLine(char userInput[]){
-	if(strlen(userInput) == 0) return;
-        userInput[strlen(userInput)-1] = '\0';
-	strtok(userInput, "\r");
-}
+void removeNewLine(char* userInput){
+     if(strlen(userInput) == 0) return;
+     userInput[strlen(userInput)-1] = '\0';
+     strtok(userInput, "\r");
+}  

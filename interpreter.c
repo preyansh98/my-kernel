@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include "kernel.h"
 #include "cpu.h"
+#include "ram.h"
 
 int interpreter(char *commands[], int numargs); 
 int help(char *commands[],int numargs); 
@@ -123,5 +124,6 @@ int exec(char *commands[], int numargs){
         myinit(commands[ptr]);
     }
     
-    return scheduler();  
+    scheduler(); 
+    clearRAM();  
 }

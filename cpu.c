@@ -27,14 +27,15 @@ int run(int quanta){
             break;
         } 
 
-        //next instruction valid. 
-        strcpy(cpu.IR, nextInstruction);
-        
+        strcpy(cpu.IR, nextInstruction); 
+        cpu.IR[strlen(cpu.IR) - 1] = '\0';
+        strtok(cpu.IR, "\r");
         parse(cpu.IR); 
 
         cpu.IP++;
         cpu.quanta--; 
     }
+
     cpu.quanta = CPU_QUANTA;
     return 0; 
 }

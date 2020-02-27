@@ -31,6 +31,7 @@ void clearRAM(){
     for(int i = 0; i<=k; i++){
         ram[i] = NULL; 
     }
+    k = 0; 
 }
 
 char* getLineFromRAM(int *isValid, int k){
