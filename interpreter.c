@@ -119,13 +119,20 @@ int exec(char *commands[], int numargs){
     }
    
     initCPU(); 
+    int _loaderr = 0;
 
     for(int ptr = 1; ptr<numargs; ptr++){ 
-        myinit(commands[ptr]);
+        if(myinit(commands[ptr]) != 0){
+            _loaderr = -1;
+            break;   
+        }
     }
     
-    scheduler(); 
-    clearRAM();
+    if(_loaderr == 0)
+        scheduler(); 
     
+    clearRAM();
+    freePCB(); 
+
     return 0;  
 }

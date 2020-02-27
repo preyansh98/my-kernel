@@ -4,5 +4,6 @@
 
 int myinit(char *filename);
 int scheduler();
+void freePCB();
 
 #endif

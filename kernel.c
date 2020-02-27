@@ -10,6 +10,7 @@
 int myinit(char *filename); 
 int scheduler();
 void addToReady(PCB* pcb);  
+void freePCB(); 
 
 PCB* head = NULL;
 PCB* tail = NULL; 
@@ -89,5 +90,13 @@ void addToReady(PCB* pcb){
     } else {
         tail->next = pcb; 
         tail = pcb; 
+    }
+}
+
+void freePCB(){
+    while(head!=NULL){
+        PCB* next = head->next; 
+        free(head); 
+        head = next;
     }
 }
