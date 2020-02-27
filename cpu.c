@@ -11,6 +11,8 @@ struct CPU {
     int quanta; 
 } cpu; 
 
+int _cpuAvail = 1; 
+
 int run(int quanta);
 int isCPUAvailable();
 int getCPU_IP(); 
@@ -18,7 +20,10 @@ void setCPU_IP(int ip);
 void initCPU();  
     
 int run(int quanta){ 
-    while(cpu.quanta > 0){    
+    if(quanta > CPU_QUANTA) quanta = CPU_QUANTA;
+    
+    while(quanta > 0){
+        _cpuAvail = -1;    
         int isNextInstructionValid = -1; 
         char* nextInstruction = getLineFromRAM(&isNextInstructionValid, cpu.IP); 
          
@@ -30,19 +35,20 @@ int run(int quanta){
         strcpy(cpu.IR, nextInstruction); 
         cpu.IR[strlen(cpu.IR) - 1] = '\0';
         strtok(cpu.IR, "\r");
+        
+        printf("parsing line %d of ram which is %s \n " , cpu.IP, cpu.IR);
         parse(cpu.IR); 
 
         cpu.IP++;
-        cpu.quanta--; 
+        quanta--; 
     }
 
-    cpu.quanta = CPU_QUANTA;
+    _cpuAvail = 1;
     return 0; 
 }
 
 int isCPUAvailable(){
-    if(cpu.quanta == CPU_QUANTA) return 0; 
-    else return -1; 
+    return _cpuAvail;
 }
 
 int getCPU_IP(){
@@ -50,6 +56,7 @@ int getCPU_IP(){
 }
 
 void setCPU_IP(int ip) {
+    printf("SETTING CPU IP TO %d \n ", ip);
     cpu.IP = ip; 
 }
 

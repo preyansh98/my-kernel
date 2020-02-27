@@ -33,7 +33,7 @@ int myinit(char *filename){
      
     if(startLoc == -1 || endLoc == -1)
         return -1; 
-    
+     
     PCB* pcb = makePCB(startLoc, endLoc); 
     addToReady(pcb);    
        
@@ -45,22 +45,32 @@ int scheduler(){
     while(head != NULL) {
         while(isCPUAvailable() == -1) ; 
 
-        setCPU_IP(head->PC);
-        run(CPU_QUANTA);
+        int _ip = head->PC + head->start;
+        setCPU_IP(_ip);
+        
+        if(_ip == head->end)
+            run(CPU_QUANTA-1);
+        else
+            run(CPU_QUANTA);
+        
         int _cpuIP = getCPU_IP(); 
 
         if(_cpuIP <= head->end) {
-            head->PC = _cpuIP; 
-            PCB* newHead = head->next;  
+            int pcBefore = head->PC;
+            head->PC = _cpuIP - head->start; 
+
+            if(head->next == NULL) continue; 
+
+            PCB* newHead = head->next; 
             head->next = NULL; 
             tail->next = head;
             tail = tail->next; 
             head = newHead;  
         } else {
             //done. 
-            PCB* newHead = head->next; 
+            PCB* newHead = head->next;
             free(head); 
-            head = newHead; 
+            head = newHead;  
         } 
     }
     return 0; 

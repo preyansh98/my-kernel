@@ -28,7 +28,7 @@ void addToRAM(FILE *p, int *start, int *end){
 }
 
 void clearRAM(){
-    for(int i = 0; i<=k; i++){
+    for(int i = 0; i<k; i++){
         ram[i] = NULL; 
     }
     k = 0; 
