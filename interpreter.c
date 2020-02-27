@@ -125,5 +125,7 @@ int exec(char *commands[], int numargs){
     }
     
     scheduler(); 
-    clearRAM();  
+    clearRAM();
+    
+    return 0;  
 }

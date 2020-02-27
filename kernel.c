@@ -64,7 +64,8 @@ int scheduler(){
             PCB* newHead = head->next; 
             head->next = NULL; 
             tail->next = head;
-            tail = tail->next; 
+            tail = tail->next;
+            tail->next = NULL; 
             head = newHead;  
         } else {
             //done. 
