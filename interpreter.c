@@ -3,9 +3,6 @@
 #include <string.h>
 #include "shell.h"
 #include "shellmemory.h"
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <unistd.h>
 #include "kernel.h"
 #include "cpu.h"
 #include "ram.h"
@@ -104,20 +101,11 @@ int exec(char *commands[], int numargs){
         for(int ptr1 = ptr+1; ptr1 < numargs; ptr1++){
             if(strcmp(prog, commands[ptr1]) == 0) {
                 printf("Error: Script %s already loaded \n", prog);
-                return -1; 
+                return 1; 
             }
         }
     }
-
-    //check if programs exist
-    for(int ptr = 1; ptr<numargs; ptr++){
-        char* prog_name = commands[ptr]; 
-        
-        if(access(prog_name, F_OK) == -1) {
-            return 0; 
-        }
-    }
-   
+       
     initCPU(); 
     int _loaderr = 0;
 
