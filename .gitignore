@@ -1,2 +1,3 @@
-*.txt
+s*.txt 
+testfile.txt
 mykernel
